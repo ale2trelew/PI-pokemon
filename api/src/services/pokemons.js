@@ -2,6 +2,7 @@ const { Pokemon, Type } = require('../db');
 const axios = require('axios');
 
 
+
 const searchIdApi = async(id) => {
     const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = pokemon.data;
@@ -40,7 +41,7 @@ const getAllPokemons = async () => {
     return pokemons;
 }
 
-const fillTypesDB = async () => {
+const fillTypesDB = async function () {
     let typesDb = [];
     try {
         typesDb = await Type.findAll({ where: { createdinDb: true } });
@@ -60,6 +61,80 @@ const fillTypesDB = async () => {
         console.log("Types Loaded.. ", await Types.count());
     } catch(err){
         console.log(err.message);
+    }
+}
+
+const createFromApi = async function () {
+    try {
+        const pokemonInDb = await Pokemon.findAll({ where: { createdinDb: true}})
+        const count = await Pokemon.count();
+        if (pokemonInDb.length === count) {
+            const apiPoke = await getAllPokemons();
+            for (let i = 0; i < apiPoke.length; i++) {
+                let newPokemon = await Pokemon.create({
+                    id: apiPoke[i].id,
+                    name: apiPoke[i].name,
+                    hp: apiPoke[i].hp,
+                    attack: apiPoke[i].attack,
+                    defense: apiPoke[i].defense,
+                    speed: apiPoke[i].speed,
+                    height: apiPoke[i].height,
+                    weight: apiPoke[i].weight,
+                    sprite: apiPoke[i].sprite,
+                })
+                let typeDb = await Type.findAll({ where: { name: apiPoke[i].types[0].name }})
+                newPokemon.addType(typeDb);
+                if (apiPoke[i].types[1]) {
+                    let typeDb2 = await Type.findAll({ where: { name: apiPoke[i].types[1].name} });
+                    newPokemon.addType(typeDb2);
+                }
+            }
+        }
+        console.log("Pokemons cargados...", await Pokemon.count());
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+const loadDb = async function () {
+    await fillTypesDB();
+    await createFromApi();
+}
+
+const filters = async (typeFilter, orderBy) => {
+    try {
+        var filterType = await Pokemon.findAll({
+            inlcude: {
+                model: Type,
+                where: { "name": typeFilter },
+                attributes: ["name"]
+            },
+        })
+        if (filterType.length) {
+            if (orderBy) return setOrder(filterType, orderBy);
+            return filterType;
+        }
+    } catch (err) {
+        console.log(err.message);
+        throw new Error({ msg: err.message });
+    }
+}
+
+const setOrder = (pokemon, by) => {
+    switch (by) {
+        case "attackUp": {
+            return pokemon.sort((a, b) => b.attack - a.attack); 
+        };
+        case "attackDown": {
+            return pokemon.sort((a, b) => a.attack - b.attack);
+        };
+        case "nameUp": {
+            return pokemon.sort((a, b) => a.name.localCompare(b.name));
+        };
+        case "nameDown": {
+            return pokemon.sort((a, b) => b.name.localCompare(a.name));
+        };
+        default: return pokemon;
     }
 }
 
