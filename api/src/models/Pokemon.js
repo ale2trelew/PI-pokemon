@@ -10,9 +10,14 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
+    idApiPoke: {
+      type: DataTypes.INTEGER,
+      unique: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     hp: {
       type: DataTypes.INTEGER,
@@ -44,7 +49,7 @@ module.exports = (sequelize) => {
     createdInDb: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: true
+      defaultValue: false
     }
   });
 };

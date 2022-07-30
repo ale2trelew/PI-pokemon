@@ -44,9 +44,12 @@ const getAllPokemons = async () => {
 const fillTypesDB = async function () {
     let typesDb = [];
     try {
-        typesDb = await Type.findAll({ where: { createdinDb: true } });
+        typesDb = await Type.findAll({ where: { createdInDb: true } });
+        // console.log("CANTIDAD DE typesDb: ", typesDb);
         const cantTypesDb = await Type.count();
-        if (typesDb === cantTypesDb) {
+        // console.log("CANTIDAD DE cantTypesDb: ", cantTypesDb);
+        if (typesDb.length === cantTypesDb) {
+            // console.log("ENTRE AL IF DE TYPES");
             const api = await axios.get("https://pokeapi.co/api/v2/type");
             const apiTypes = api.data.results.map(element => element.name);
             for (let i = 0; i < apiTypes.length; i++) {
@@ -58,7 +61,7 @@ const fillTypesDB = async function () {
                 });  
             };
         };
-        console.log("Types Loaded.. ", await Types.count());
+        console.log("Types Loaded.. ", await Type.count());
     } catch(err){
         console.log(err.message);
     }
@@ -66,13 +69,15 @@ const fillTypesDB = async function () {
 
 const createFromApi = async function () {
     try {
-        const pokemonInDb = await Pokemon.findAll({ where: { createdinDb: true}})
+        const pokemonInDb = await Pokemon.findAll({ where: { createdInDb: true}}) //CUIDAD CON ESTO XQ DEBERIA TRAER 0 SOLO CUANDO LA db ESTA VACIA LA PRIMERA VEZ
+        
         const count = await Pokemon.count();
+
         if (pokemonInDb.length === count) {
             const apiPoke = await getAllPokemons();
             for (let i = 0; i < apiPoke.length; i++) {
                 let newPokemon = await Pokemon.create({
-                    id: apiPoke[i].id,
+                    idApiPoke: apiPoke[i].id,
                     name: apiPoke[i].name,
                     hp: apiPoke[i].hp,
                     attack: apiPoke[i].attack,
@@ -138,4 +143,4 @@ const setOrder = (pokemon, by) => {
     }
 }
 
-module.exports = { searchIdApi, getAllPokemons };
+module.exports = { loadDb, setOrder, filters };
