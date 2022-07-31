@@ -53,9 +53,8 @@ const fillTypesDB = async function () {
             const api = await axios.get("https://pokeapi.co/api/v2/type");
             const apiTypes = api.data.results.map(element => element.name);
             for (let i = 0; i < apiTypes.length; i++) {
-                if (apiTypes[i] == "shadow" || apiTypes[i] == "unknown") {
-                    continue;
-                }
+                
+                
                 Type.findOrCreate({
                     where: { name: apiTypes[i] }
                 });  

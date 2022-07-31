@@ -100,6 +100,7 @@ router.post('/create', async (req, res) => {
             speed:req.body.speed,
             height:req.body.height,
             weight:req.body.weight,
+            createdInDb: true,
             sprite: sprite ? sprite : "https://media.giphy.com/media/DRfu7BT8ZK1uo/giphy.gif"
         });
         let typeDb = await Type.findAll({ where: { name: arrType[0].name } });
@@ -113,5 +114,38 @@ router.post('/create', async (req, res) => {
         console.log(err);
     }
 })
+
+router.get('/:id', async (req, res) => {
+    try {
+        let { id } = req.params;
+        if(id.length > 1) {
+            var encontrado = await Pokemon.findOne({
+                where: { id: id },
+                include: {
+                    model: Type,
+                    attributes: ['name'],
+                    through: { attributes: [], }
+                }
+            });
+        } else if (typeof id === "string") {
+            var encontrado = await Pokemon.findOne({
+                where: { idApiPoke: parseInt(id) },
+                include: {
+                    model: Type,
+                    attributes: ['name'],
+                    through: { attributes: [], }
+                }
+            });
+        } else {
+            return res.status(400).json({ info: `No existe pokemon con el id `, encontrado });
+        }
+        res.send(encontrado);
+    } catch (err) {
+        console.log(err.message);
+        res.send({ msg: err.msg });
+    }
+})
+
+
 
 module.exports = router;
