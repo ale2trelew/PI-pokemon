@@ -21,6 +21,41 @@ function reducer(state = initialState, { type, payload }) {
                 types: payload
             }
         };
+        case "FILTER_BY_CREATED": {
+            const allPoke = state.allPokemons;
+            const filterByCreated = 
+                payload === "Created" ? 
+                    allPoke.filter(poke => poke.createdInDb):
+                    allPoke.filter(poke => !poke.createdInDb);
+            return {
+                ...state,
+                pokemons: payload === 'All' ? allPoke : filterByCreated
+            }
+        };
+        case "FILTERS": {
+            return {
+                ...state,
+                pokemons: payload
+            }
+        };
+        case "ORDER": {
+            return {
+                ...state,
+                pokemons: payload
+            }
+        };
+        case "GET_DETAILS": {
+            return {
+                ...state,
+                details: payload
+            }
+        };
+        case "FIND_BY_NAME": {
+            return {
+                ...state,
+                pokemons: payload
+            }
+        };
         case "CREATE_POKEMON": {
             return {
                 ...state

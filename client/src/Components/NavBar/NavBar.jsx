@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./styles.module.css";
 import image from "../../resources/pokemonLogo.png";
-// import Form from "../Form"
+import Form from "../Form/Form";
 
 export const NavBar = () => {
     const [open, setOpen] = useState(false);
