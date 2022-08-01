@@ -15,7 +15,17 @@ function reducer(state = initialState, { type, payload }) {
                 allPokemons: payload
             }
         };
-    
+        case "GET_TYPES": {
+            return {
+                ...state,
+                types: payload
+            }
+        };
+        case "CREATE_POKEMON": {
+            return {
+                ...state
+            }
+        };
         default:
             return state;
     }

@@ -27,3 +27,13 @@ export function fetchTypes() {
         }
     }
 }
+
+export function postPokemon(payload) {
+    return async function (dispatch) {
+        const response = await axios.post(`http://localhost:3001/pokemons/create`, payload);
+        return dispatch({
+            type: "CREATE_POKEMON",
+            response
+        })
+    }
+}
