@@ -27,6 +27,7 @@ export default function Details(props) {
                 </div>
             </div>
             <div className="detail-data">
+                <p>{pokemon.name}</p>
                 <p>Vida: {pokemon.hp}</p>
                 <p>Ataque: {pokemon.attack}</p>
                 <p>Defensa: {pokemon.defense}</p>

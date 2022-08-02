@@ -18,6 +18,7 @@ export default function Filters() {
     });
 
     function handleClick(e) {
+        e.preventDefault(); //POR SI RENDERIZA LENTO
         setFilter({
             typeFilter: "default",
             order: 'default'
@@ -26,7 +27,7 @@ export default function Filters() {
     }
 
     function handleFilters(event) {
-        
+        event.preventDefault(); //POR SI RENDERIZA LENTO
         switch (event.target?.value) {
             case 'nameUp': {
                 setFilter({
@@ -75,6 +76,7 @@ export default function Filters() {
         <div className="filters">
             <div className="type-container">
                 {allTypes.map((type) => {
+                    console.log("DDDDDDDDDDDDD", type.name);
                     return (
                         <TypeIcon key={type.id} name={type.name} handleFilters={handleFilters} />
                     )

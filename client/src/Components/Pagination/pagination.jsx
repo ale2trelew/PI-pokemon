@@ -3,7 +3,7 @@ import "./styles.css";
 
 export const Pagination = ({ pokemonsPerPage, totalPokemons, paginate }) => {
     const pageNumber = [];
-    for (let i = 1; i < Math.ceil(totalPokemons / pokemonsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(totalPokemons / pokemonsPerPage); i++) {
         pageNumber.push(i);
     }
     return (
