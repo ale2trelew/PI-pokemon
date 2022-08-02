@@ -6,14 +6,14 @@ import notFoundImg from "../../resources/404-Page-Not-Found.png";
 import { fetchPokemons, fetchTypes } from "../../redux/actions";
 import Card from "../../Components/Card/card";
 import "./styles.css";
-
+import Filters from "../../Components/Filters/Filters";
 //FALTAN LOS FILTERS
 
 export default function Home() {
     const dispatch = useDispatch();
     const allPokes = useSelector((state) => state.pokemons);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pokemonsPerPage] = useState(10);
+    const [pokemonsPerPage] = useState(12);
     const indexOfLastPokemon = currentPage * pokemonsPerPage;
     const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
 
@@ -36,7 +36,7 @@ export default function Home() {
 
     return (
         <div className="ContainerPrincipal">
-            {/* faltan filtros */}
+            <Filters />
 
             <div className="pokePosition">
                 {currentPokemons.length ? currentPokemons?.map((e, i) => {
