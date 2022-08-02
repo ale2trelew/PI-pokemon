@@ -1,5 +1,8 @@
 import React from "react";
-import { fetchPokemons, filterPokemons } from "../../redux/actions";
+import { 
+    fetchPokemons, 
+    filterPokemons 
+} from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import TypeIcon from "../Icons/TypeIcon";
@@ -23,6 +26,7 @@ export default function Filters() {
     }
 
     function handleFilters(event) {
+        
         switch (event.target?.value) {
             case 'nameUp': {
                 setFilter({

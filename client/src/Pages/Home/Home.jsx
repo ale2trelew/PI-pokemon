@@ -40,6 +40,7 @@ export default function Home() {
 
             <div className="pokePosition">
                 {currentPokemons.length ? currentPokemons?.map((e, i) => {
+                    
                     return (
                         <div key={i}>
                             <Card id={e.id} name={e.name} img={e.sprite} types={e.types} />

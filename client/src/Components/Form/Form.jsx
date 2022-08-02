@@ -31,7 +31,7 @@ export default function Form() {
             let err = Object.values(errors);
             return alert(message = err.map(e => e + '\n'));
         } else {
-            const { name, hp, attack, defense, speed, height, weight, sprite, types } = input;
+            const { name, hp, attack, defense, speed, height, weight, image, types } = input;
             if (name && hp && attack && defense && speed && height && weight && types.length !== 0) {
                 dispatch(postPokemon(input));
                 alert("Pokemon creado con exito!");
@@ -102,19 +102,19 @@ export default function Form() {
         let errors = {};
         if (!input.name) {
             errors.name = "Debe ingresar un nombre";
-        } else if (!tisString(input.name)) errors.name = "Solo caracteres";
-        else if (!input.hp) errors.hp = "Debe ingresar un valor";
-        else if (!tisNumber(input.hp)) errors.hp = "Solo números";
-        else if (!input.attack) errors.attack = "Debe ingresar un valor";
-        else if (!tisNumber(input.attack)) errors.attack = "Solo números";
-        else if (!input.defense) errors.defense = "Debe ingresar un valor";
-        else if (!tisNumber(input.defense)) errors.defense = "Solo números";
-        else if (!input.speed) errors.speed = "Debe ingresar un valor";
-        else if (!tisNumber(input.speed)) errors.speed = "Solo números";
-        else if (!input.weight) errors.weight = "Debe ingresar un valor";
-        else if (!tisNumber(input.weight)) errors.weight = "Solo números";
-        else if (!input.height) errors.height = "Debe ingresar un valor";
-        else if (!tisNumber(input.height)) errors.height = "Solo números";
+        } else if (!tisString(input.name)) errors.name = "No es una letra";
+        else if (!input.hp) errors.hp = "Debe ingresar un valor para la vida";
+        else if (!tisNumber(input.hp)) errors.hp = "No es un número";
+        else if (!input.attack) errors.attack = "Debe ingresar un valor para el ataque";
+        else if (!tisNumber(input.attack)) errors.attack = "No es un número";
+        else if (!input.defense) errors.defense = "Debe ingresar un valor para la defensa";
+        else if (!tisNumber(input.defense)) errors.defense = "No es un número";
+        else if (!input.speed) errors.speed = "Debe ingresar un valor para la velocidad";
+        else if (!tisNumber(input.speed)) errors.speed = "No es un número";
+        else if (!input.weight) errors.weight = "Debe ingresar un valor para el peso";
+        else if (!tisNumber(input.weight)) errors.weight = "No es un número";
+        else if (!input.height) errors.height = "Debe ingresar un valor para la altura";
+        else if (!tisNumber(input.height)) errors.height = "No es un número";
         return errors;
     }
     return (
@@ -203,7 +203,7 @@ export default function Form() {
                 name="image"
                 placeholder={("Ingrese una imagen")}
                 onChange={(e) => handleChange(e)}
-                value={input.sprite} />
+                value={input.image} />
                 <select className="generic-input" onChange={(e) => { handleSelect(e); }}>
                     {types.map((e) => {
                         return (
@@ -221,7 +221,7 @@ export default function Form() {
                 </div>
                 <ul>
                     <li>
-                        <a href={null} onClick={handleClearTypes} >Clear</a>
+                        <a href={null} onClick={handleClearTypes} >Limpiar tipos</a>
                     </li>
                     <li>
                         <button className="realodButton" type="submit">Crear!</button>

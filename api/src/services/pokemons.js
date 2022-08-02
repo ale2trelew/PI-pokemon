@@ -20,7 +20,7 @@ const searchIdApi = async(id) => {
 }
 
 const getAllPokemons = async () => {
-    const pokemonsApi = await axios.get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=60");
+    const pokemonsApi = await axios.get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=61");
     const mapUrl = await pokemonsApi.data.results.map(element => { return element.url});
     let pokemons = [];
     for (let i = 0; i < mapUrl.length; i++) {
@@ -133,10 +133,10 @@ const setOrder = (pokemon, by) => {
             return pokemon.sort((a, b) => a.attack - b.attack);
         };
         case "nameUp": {
-            return pokemon.sort((a, b) => a.name.localCompare(b.name));
+            return pokemon.sort((a, b) => a.name.localeCompare(b.name));
         };
         case "nameDown": {
-            return pokemon.sort((a, b) => b.name.localCompare(a.name));
+            return pokemon.sort((a, b) => b.name.localeCompare(a.name));
         };
         default: return pokemon;
     }

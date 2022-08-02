@@ -40,7 +40,8 @@ router.get('/', async (req, res) => {
         if (name && name !== '') {
             const poke = await Pokemon.findAll({
                 where: {
-                    name: { [Op.iLike]: `%${name}%` }
+                    // name: { [Op.iLike]: `%${name}%` }
+                    name: name
                 },
                 include: {
                     model: Type,
@@ -48,14 +49,14 @@ router.get('/', async (req, res) => {
                     through: { attributes: [], }
                 }
             })
-            console.log("ENTRE A NAME");
+            console.log("ENTRE A NAME ");
             if (poke?.length) return res.status(200).send(poke);
             else return res.status(404).send(`El pokemon "${name}" no existe.`);
         }
 
         if ( typeFilter !== 'default' && typeFilter) {
             const filteredPoke = await filters(typeFilter, order !== 'default' && order ? order : null);
-            console.log("ENTRE A TYPEFILTER");
+            console.log("ENTRE A TYPEFILTER ", filteredPoke);
             return res.send(filteredPoke);
         }
         var allPokemons = await Pokemon.findAll({
