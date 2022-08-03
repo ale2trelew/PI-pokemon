@@ -28,6 +28,14 @@ export function fetchTypes() {
     }
 }
 
+export function filterPokemonsByType(payload) {
+    console.log(payload);
+    return {
+        type: "FILTER_BY_TYPE",
+        payload
+    }
+}
+
 export function findByName(name) {
     return async function (dispatch) {
         try {

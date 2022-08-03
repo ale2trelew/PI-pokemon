@@ -12,20 +12,20 @@ export default function SearchBar() {
 
     function handleInputChange(name) {
         let matches = [];
-        // console.log("El nombre es", typeof name);
+        
         if (name.length > 0) {
             matches = allPokes.filter(pokemon => {
                 const regex = new RegExp(`${name}`, "gi");
                 return pokemon.name.match(regex);
             }).splice(0, 3);
         }
-        setSugestion(matches);
+        // setSugestion(matches);
         setName(name);
     }
 
     function sugestionHandler(name) {
         setName(name);
-        setSugestion([]);
+        // setSugestion([]);
         dispatch(findByName(name));
     }
 

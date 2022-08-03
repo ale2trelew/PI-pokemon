@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Pagination from "../../Components/Pagination/pagination";
 import notFoundImg from "../../resources/404-Page-Not-Found.png";
-import { fetchPokemons, fetchTypes } from "../../redux/actions";
+import { fetchPokemons, fetchTypes, filterByCreated, filterPokemonsByType } from "../../redux/actions";
 import Card from "../../Components/Card/card";
 import "./styles.css";
 import Filters from "../../Components/Filters/Filters";
@@ -30,13 +30,28 @@ export default function Home() {
         indexOfLastPokemon
     );
 
+    function handleFilterCreatedInDb(e) {
+        e.preventDefault();
+        dispatch(filterByCreated(e.target.value))
+    }
+
+    function handleTypes(e) {
+        e.preventDefault();
+        dispatch(filterPokemonsByType(e.target.value));
+        setCurrentPage(1)
+        console.log(e.target.value, 'HANDLE TYPES');
+    }
+
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     
 
     return (
         <div className="ContainerPrincipal">
-            <Filters />
+            <Filters
+                createdFilter={handleFilterCreatedInDb}
+                typesFilter={handleTypes}
+            />
 
             <div className="pokePosition">
                 {currentPokemons.length ? currentPokemons?.map((e, i) => {

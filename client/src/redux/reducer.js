@@ -21,6 +21,15 @@ function reducer(state = initialState, { type, payload }) {
                 types: payload
             }
         };
+        case 'FILTER_BY_TYPE':
+            const allPokes = state.allPokemons;
+            const typeFiltered = payload === "todos" ? allPokes :
+            allPokes.filter( pt => pt.types.map( pt => pt.name ).includes( payload ))
+            console.log(typeFiltered, 'soy el filter_by_type');
+            return{
+                ...state,
+                pokemons: typeFiltered
+        };
         case "FILTER_BY_CREATED": {
             const allPoke = state.allPokemons;
             const filterByCreated = 
@@ -29,7 +38,8 @@ function reducer(state = initialState, { type, payload }) {
                     allPoke.filter(poke => !poke.createdInDb);
             return {
                 ...state,
-                pokemons: payload === 'All' ? allPoke : filterByCreated
+                // pokemons: payload === 'All' ? allPoke : filterByCreated
+                pokemons: filterByCreated
             }
         };
         case "FILTERS": {

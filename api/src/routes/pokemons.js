@@ -26,9 +26,9 @@ const { setOrder, filters } = require('../services/pokemons');
 router.get('/', async (req, res) => {
     let { name, typeFilter, order, created } = req.query;
     try {
-        if (created !== 'default' && created == true) {
+        if (created !== 'default' && created === true) {
             const createdInDb = await Pokemon.findAll({ where: {
-                createdInDb: created
+                createdInDb: true
             } });
             if (!createdInDb.length) {
                 return res.send({ msg: "No has creado ningun pokemon todavia" });
