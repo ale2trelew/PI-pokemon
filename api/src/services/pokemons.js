@@ -107,15 +107,19 @@ const loadDb = async function () {
 
 const filters = async (typeFilter, orderBy) => {
     try {
+        console.log(typeFilter.toUpperCase());
         var filterType = await Pokemon.findAll({
             inlcude: {
                 model: Type,
                 where: { "name": typeFilter },
                 attributes: ["name"]
             },
-        })
+        });
         if (filterType.length) {
-            if (orderBy) return setOrder(filterType, orderBy);
+            if (orderBy) {
+                console.log(setOrder(filterType, orderBy));
+                return setOrder(filterType, orderBy)
+            };
             return filterType;
         }
     } catch (err) {

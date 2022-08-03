@@ -56,6 +56,7 @@ function reducer(state = initialState, { type, payload }) {
                 pokemons: payload
             }
         };
+        
         case "CREATE_POKEMON": {
             return {
                 ...state

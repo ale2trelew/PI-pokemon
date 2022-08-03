@@ -10,7 +10,7 @@ export const NavBar = () => {
     return (
         <div className={style.NavBar}>
             <nav className={style.header}>
-                <Link to="/pokemons" className={style.logo}>
+                <Link to={`/pokemons`} className={style.logo}>
                     <img src={image} alt="" />
                 </Link>
                 <ul>

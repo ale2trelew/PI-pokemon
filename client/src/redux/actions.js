@@ -42,6 +42,8 @@ export function findByName(name) {
     }
 }
 
+
+
 export function postPokemon(payload) {
     return async function (dispatch) {
         const response = await axios.post(`http://localhost:3001/pokemons/create`, payload);
@@ -68,6 +70,8 @@ export function filterByCreated(payload) {
         payload
     }
 }
+
+
 
 export function filterPokemons(payload) {
     return async function (dispatch) {

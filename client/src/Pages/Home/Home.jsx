@@ -7,7 +7,7 @@ import { fetchPokemons, fetchTypes } from "../../redux/actions";
 import Card from "../../Components/Card/card";
 import "./styles.css";
 import Filters from "../../Components/Filters/Filters";
-//FALTAN LOS FILTERS
+
 
 export default function Home() {
     const dispatch = useDispatch();

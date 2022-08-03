@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { postPokemon, fetchTypes } from "../../redux/actions";
+import { postPokemon, fetchTypes, findClone } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import TypeIcon from "../Icons/TypeIcon";
 import "./index.css"
@@ -31,26 +31,29 @@ export default function Form() {
             let err = Object.values(errors);
             return alert(message = err.map(e => e + '\n'));
         } else {
-            const { name, hp, attack, defense, speed, height, weight, image, types } = input;
-            if (name && hp && attack && defense && speed && height && weight && types.length !== 0) {
-                dispatch(postPokemon(input));
-                alert("Pokemon creado con exito!");
-            } else {
-                alert("Te falta completar un campo!");
+            const { name, hp, attack, defense, speed, height, weight, sprite, types } = input;
+
+        if (name && hp && attack && defense && speed && height && weight && types.length !== 0) {
+                    dispatch(postPokemon(input));
+                    alert("Pokemon creado con exito!");
+                } else {
+                    alert("Te falta completar un campo!");
+                }
+                setInput({
+                    name: "",
+                    hp: "",
+                    attack: "",
+                    defense: "",
+                    speed: "",
+                    height: "",
+                    weight: "",
+                    sprite: "",
+                    types: [],
+                });
             }
-            setInput({
-                name: "",
-                hp: "",
-                attack: "",
-                defense: "",
-                speed: "",
-                height: "",
-                weight: "",
-                sprite: "",
-                types: [],
-            });
+
             history.push("/pokemons");
-        }
+        
     }
     useEffect(() => {
         dispatch(fetchTypes());
@@ -78,11 +81,18 @@ export default function Form() {
     }
 
     function handleSelect(event) {
-        setInput({
+        input.types.length < 2 && !input.types.includes(event.target.value) ? setInput({
             ...input,
             types: [...input.types, event.target.value],
-        });
+        }) : alert("Maximo dos tipos");
     }
+
+    // function handleSelect(e) {
+    //     input.types.length < 2 && !input.types.includes(e.target.value) ? setInput({
+    //         ...input,
+    //         types: [...input.types, e.target.value]
+    //     }) : alert('Maximo dos tipos!')
+    // }
 
     function tisNumber(n) {
         if (/^\d+$/.test(n)) {
@@ -197,13 +207,16 @@ export default function Form() {
                     onChange={(e) => handleChange(e)} />
                     {errors.weight && <p className="errors">{errors.weight}</p>}
                 </div>
+
                 <input
                 className="generic-input"
-                type="text"
-                name="image"
+                type="url"
+                id="sprite"
                 placeholder={("Ingrese una imagen")}
+                name="sprite"
                 onChange={(e) => handleChange(e)}
-                value={input.image} />
+                value={input.sprite} />
+
                 <select className="generic-input" onChange={(e) => { handleSelect(e); }}>
                     {types.map((e) => {
                         return (

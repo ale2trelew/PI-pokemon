@@ -1,13 +1,14 @@
 import React from "react";
 import { 
     fetchPokemons, 
-    filterPokemons 
+    filterPokemons,
 } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import TypeIcon from "../Icons/TypeIcon";
 import "./Filters.css";
 import SearchBar from "../SearchBar/SearchBar";
+
 
 export default function Filters() {
     const allTypes = useSelector((state) => state.types);
@@ -76,7 +77,7 @@ export default function Filters() {
         <div className="filters">
             <div className="type-container">
                 {allTypes.map((type) => {
-                    console.log("DDDDDDDDDDDDD", type.name);
+                    // console.log("DDDDDDDDDDDDD", type.name);
                     return (
                         <TypeIcon key={type.id} name={type.name} handleFilters={handleFilters} />
                     )

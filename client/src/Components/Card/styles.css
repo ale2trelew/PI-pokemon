@@ -6,8 +6,8 @@
   /* background-color: rgba(252, 191, 61, 0.5); */
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45);
   margin: 15px;
-  width: 15rem;
-  height: 17rem;
+  width: 20rem;
+  height: 24rem;
   text-decoration: none;
   text-align: center;
 
@@ -25,6 +25,7 @@
   margin: 0 auto;
   opacity: 1.5;
   border-radius: 5%;
+  padding-top: 3rem;
   /* display: inline-block; */
 }
 
@@ -32,6 +33,7 @@
   text-transform: capitalize;
   font-weight: 1000;
   height: 1rem;
+  padding-top: 1rem;
 }
 
 .card .types {

@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
             if (!createdInDb.length) {
                 return res.send({ msg: "No has creado ningun pokemon todavia" });
             }
-            console.log("ENTRE A CREATED");
+            // console.log("ENTRE A CREATED");
             return res.send(createdInDb);
         }
 
@@ -49,14 +49,15 @@ router.get('/', async (req, res) => {
                     through: { attributes: [], }
                 }
             })
-            console.log("ENTRE A NAME ");
+            // console.log("ENTRE A NAME ");
             if (poke?.length) return res.status(200).send(poke);
             else return res.status(404).send(`El pokemon "${name}" no existe.`);
         }
-
+        
+        
         if ( typeFilter !== 'default' && typeFilter) {
             const filteredPoke = await filters(typeFilter, order !== 'default' && order ? order : null);
-            console.log("ENTRE A TYPEFILTER ", filteredPoke);
+            // console.log("ENTRE A TYPEFILTER ", filteredPoke);
             return res.send(filteredPoke);
         }
         var allPokemons = await Pokemon.findAll({
@@ -67,7 +68,7 @@ router.get('/', async (req, res) => {
             }
         })
         if (order !== 'default' && order) {
-            console.log("ENTRE A ORDER");
+            // console.log("ENTRE A ORDER");
             allPokemons = setOrder(allPokemons, order);
         }
         res.send(allPokemons);
@@ -82,7 +83,7 @@ router.post('/create', async (req, res) => {
         name, hp, attack, defense, speed, height, weight, sprite
     } = req.body;
     if (!name || !hp || !attack || !defense || !speed || !height || !weight) {
-        console.log(name);
+        // console.log(name);
         return res.status(400).json({ info: `Falta ingresar un dato` });
     }
     let arrType = [];
@@ -91,7 +92,7 @@ router.post('/create', async (req, res) => {
         return res.status(400).json({ info: `Debes elegir al menos un tipo` });
     }
     const exist = await Pokemon.findOne({ where: { name: req.body.name } });
-    if (exist) return res.json({ info: "Ya existe un pokemon con ese nombre" });
+    if (exist) return res.status(500).send('Something broke!');
     try {
         const newPoke = await Pokemon.create({
             name:req.body.name,
